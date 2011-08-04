@@ -49,7 +49,7 @@ else :
 		if dico_server.has_key(key):
 			print dico_server[key]
 		else:
-			print "the key key you requested does not exist."
+			print "the key you requested does not exist."
 	else:
 		dico_print(dico_server)
 #	print received
