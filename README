@@ -1,0 +1,31 @@
+WHATEVER
+
+that code is a quick and dirty hack to get Quake3 server informations 
+ * http://github.com/phantez/quake3check
+
+INSTALL
+
+1/ Copy quake3check.py wherever you want as long you can execute it
+2/ chmod u+x $PATHTOQUAKE3CHECK/quake3check.py
+3/ $PATHTOQUAKE3CHECK/quake3check.py <server ip> <server port> [<key>]
+
+TODO
+
+Handle timeout if server is not responding
+
+OPTIONS
+
+usage : ./quake3check.py <quake3 server ip> <port> [<key>]
+
+./quake3check.py 127.0.0.1 27960		Will display many informations about your server
+./quake3check.py 127.0.0.1 27960 clients	Will report the number of connected clients
+
+LICENCES
+
+quake3check.py is under WTFPL (because I don't care what you do with it, but if you don't 
+tell me you've upgraded it, you're just a moron)
+
+And if you find it usefull, buy me a beer ! 
+Mail-me on phantez at gmail dot com
+
+EOF
