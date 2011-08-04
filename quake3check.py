@@ -3,7 +3,7 @@
 __AUTHOR__      = 'Stephan GORGET'
 __CONTACT__     = 'phantez AT gmail DOT com'
 
-__NAME__        = 'quake3-check.py'
+__NAME__        = 'quake3check.py'
 __VERSION__     = 0.1
 __DESCRIPTION__ = 'Use UDP port to check status of a Quake3 server'
 __LICENSE__     = 'WTF Public License <http://sam.zoy.org/wtfpl/>'
