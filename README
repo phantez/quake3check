@@ -11,7 +11,7 @@ INSTALL
 
 TODO
 
-Handle timeout if server is not responding
+Turn it into a python object
 
 OPTIONS
 

@@ -21,36 +21,52 @@ def dico_print(dico):
 	for k, v in dico.iteritems():
 	        print "%30s => %s" % (str(k), str(v))
 
-
-if len(sys.argv) < 3:
-	print "usage : %s <quake3 server ip> <port> [<key>]" % sys.argv[0]
-else :
-	server_ip = sys.argv[1]
-	server_port = int(sys.argv[2])
+def interogate(ip, port,timeout):
 	data1="\xff\xff\xff\xff\x02getinfo\n"
 	data2="\xff\xff\xff\xff\x02getstatus\n"
 	dico_server={}
-	dico_server["server_ip"] = str(server_ip)
-	dico_server["server_port"] = str(server_port)
+	dico_server["server_ip"] = str(ip)
+	dico_server["server_port"] = str(port)
 	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	sock.settimeout(timeout)
+
+	try:
+		sock.sendto(data1+"\n", (ip, port))
+		received = sock.recv(1024)
+		info = received.split("\n")[1]
+		
+		sock.sendto(data2+"\n", (ip, port))
+		received2 = sock.recv(1024)
+		status = received2.split("\n")[1]
+		response_to_dico(info, dico_server)
+		response_to_dico(status, dico_server)
+#		dico_print(dico_server)
+#		print received
+#		print received2
+		err = False
+	except:
+		err = "Timeout - Server is down or not responding"
+	return dico_server, err
 	
-	sock.sendto(data1+"\n", (server_ip, server_port))
-	received = sock.recv(1024)
-	info = received.split("\n")[1]
-	
-	sock.sendto(data2+"\n", (server_ip, server_port))
-	received2 = sock.recv(1024)
-	status = received2.split("\n")[1]
-	
-	response_to_dico(info, dico_server)
-	response_to_dico(status, dico_server)
-	if len(sys.argv) >= 4:
-		key = sys.argv[3]
-		if dico_server.has_key(key):
-			print dico_server[key]
+
+def main():
+	if len(sys.argv) < 3:
+		print "usage : %s <quake3 server ip> <port> [<key>]" % sys.argv[0]
+	else :
+		server_ip = sys.argv[1]
+		server_port = int(sys.argv[2])
+		dico_server, err = interogate(server_ip, server_port, 5)
+		if err != False:
+			print "Something went wrong : \"%s\"" % (err)
 		else:
-			print "the key you requested does not exist."
-	else:
-		dico_print(dico_server)
-#	print received
-#	print received2
+			if len(sys.argv) >= 4:
+				key = sys.argv[3]
+				if dico_server.has_key(key):
+					print dico_server[key]
+				else:
+					print "the key you requested does not exist."
+			else:
+				dico_print(dico_server)
+
+if __name__ == "__main__":
+	main()
